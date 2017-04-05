@@ -19,7 +19,7 @@ In XCode, navigate to the project's general settings tab:
 * Click on the blue project icon in the file explorer
 * Select your "team" for code signing
 
-![iosCodeSigning.png]
+![iosCodeSigning.png](iosCodeSigning.png)
 
 * Press the Play button to run on your device/simulator
 
