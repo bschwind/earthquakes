@@ -15,7 +15,7 @@ Install App on iOS Device
 
 In XCode, navigate to the project's general settings tab:
 
-* `open ios/open ios/earthquakes.xcodeproj/`
+* `open ios/earthquakes.xcodeproj/`
 * Click on the blue project icon in the file explorer
 * Select your "team" for code signing
 
