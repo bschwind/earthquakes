@@ -23,6 +23,8 @@
 
 ; Third-party Components
 (def map-view (r/adapt-react-class MapView))
+(def map-marker (r/adapt-react-class (.-Marker MapView)))
+(def map-circle (r/adapt-react-class (.-Circle MapView)))
 (def tab-bar-icon (r/adapt-react-class (.-TabBarItem Icon)))
 
 ; Custom Components

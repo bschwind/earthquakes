@@ -3,7 +3,7 @@
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [earthquakes.events]
             [earthquakes.subs]
-            [earthquakes.common.ui :as ui :refer [app-registry alert view text image touchable-highlight map-view tab-bar-icon]]
+            [earthquakes.common.ui :as ui :refer [app-registry alert view text image touchable-highlight map-view map-marker map-circle tab-bar-icon]]
             [earthquakes.ios.ui :as ios-ui :refer [tab-bar]]))
 
 (def logo-img (js/require "./images/cljs.png"))
@@ -37,10 +37,18 @@
                       :selected-icon-name "ios-map"
                       :on-press #(reset! selected-tab 1)}
         [map-view {:style {:flex 1}
-                   :region {:longitude 139.704039
-                            :latitude 35.713765
-                            :longitude-delta 0.1
-                            :latitude-delta 0.1}}]]])))
+                   :region {:latitude 35.713765
+                            :longitude 139.704039
+                            :latitude-delta 0.1
+                            :longitude-delta 0.1}}
+         [map-marker {:coordinate {:latitude 35.713765
+                                   :longitude 139.704039}
+                      :title "oh noooooo!!!"}]
+         [map-circle {:center {:latitude 35.713765
+                                   :longitude 139.704039}
+                      :radius 100000
+                      :stroke-width 1
+                      :fill-color "rgba(255,0,0,0.2)"}]]]])))
 
 (defn init []
       (dispatch-sync [:initialize-db])
