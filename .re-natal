@@ -8,7 +8,9 @@
     "prod": "env/prod"
   },
   "modules": [
-    "react-native-maps"
+    "react-native-maps",
+    "react-native-vector-icons",
+    "react-native-vector-icons/Ionicons"
   ],
   "imageDirs": [
     "images"

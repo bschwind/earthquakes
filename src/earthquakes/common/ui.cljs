@@ -3,6 +3,8 @@
 
 (def ReactNative (js/require "react-native"))
 (def MapView (js/require "react-native-maps"))
+(def Icon (js/require "react-native-vector-icons/Ionicons"))
+
 (defn alert [title]
   (.alert (.-Alert ReactNative) title))
 
@@ -21,5 +23,6 @@
 
 ; Third-party Components
 (def map-view (r/adapt-react-class MapView))
+(def tab-bar-icon (r/adapt-react-class (.-TabBarItem Icon)))
 
 ; Custom Components
