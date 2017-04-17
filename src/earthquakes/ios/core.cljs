@@ -3,7 +3,7 @@
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [earthquakes.events]
             [earthquakes.subs]
-            [earthquakes.common.ui :as ui :refer [app-registry alert view text image touchable-highlight]]
+            [earthquakes.common.ui :as ui :refer [app-registry alert view text image touchable-highlight map-view]]
             [earthquakes.ios.ui :as ios-ui :refer [tab-bar tab-bar-item]]))
 
 (def logo-img (js/require "./images/cljs.png"))
@@ -26,7 +26,7 @@
     (fn []
       [tab-bar
        [tab-bar-item {:selected (= @selected-tab 0)
-                      :badge "99,999+"
+                      :badge "5"
                       :title "List"
                       :icon {:uri base64-img
                              :scale 3}
@@ -35,8 +35,11 @@
        [tab-bar-item {:selected (= @selected-tab 1)
                       :system-icon "more"
                       :on-press #(reset! selected-tab 1)}
-        [view
-         [text {:style {:margin 50}} "Hey"]]]])))
+        [map-view {:style {:flex 1}
+                   :region {:longitude 139.704039
+                            :latitude 35.713765
+                            :longitude-delta 0.1
+                            :latitude-delta 0.1}}]]])))
 
 (defn init []
       (dispatch-sync [:initialize-db])
