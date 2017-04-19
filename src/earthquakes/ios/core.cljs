@@ -26,7 +26,6 @@
       [tab-bar
        [tab-bar-icon {:selected (= @selected-tab 0)
                       :title "List"
-                      :badge "5"
                       :icon-name "ios-list-outline"
                       :selected-icon-name "ios-list"
                       :on-press #(reset! selected-tab 0)}

@@ -10,7 +10,9 @@
   "modules": [
     "react-native-maps",
     "react-native-vector-icons",
-    "react-native-vector-icons/Ionicons"
+    "react-native-vector-icons/Ionicons",
+    "react-native-vector-icons/MaterialIcons",
+    "react-native-material-bottom-navigation"
   ],
   "imageDirs": [
     "images"
