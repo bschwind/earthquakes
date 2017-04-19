@@ -39,8 +39,8 @@
         [map-view {:style {:flex 1}
                    :region {:latitude 35.713765
                             :longitude 139.704039
-                            :latitude-delta 0.1
-                            :longitude-delta 0.1}}
+                            :latitude-delta 2.4
+                            :longitude-delta 2.4}}
          [map-marker {:coordinate {:latitude 35.713765
                                    :longitude 139.704039}
                       :title "oh noooooo!!!"}]
