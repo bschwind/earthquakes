@@ -1,7 +1,9 @@
 (ns earthquakes.events
   (:require
-   [re-frame.core :refer [reg-event-db after]]
+   [re-frame.core :refer [reg-event-db after dispatch]]
    [clojure.spec :as s]
+   [ajax.core :refer [GET POST]]
+   [clojure.walk :refer [keywordize-keys]]
    [earthquakes.db :as db :refer [app-db]]))
 
 ;; -- Interceptors ------------------------------------------------------------
@@ -33,3 +35,44 @@
  validate-spec
  (fn [db [_ value]]
    (assoc db :greeting value)))
+
+;; -- Network Handlers ------------------------------------------------------
+(reg-event-db
+ :load-earthquakes
+ validate-spec
+ (fn [db [_ value]]
+   (GET "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson"
+        {:response-format :json
+         :handler #(dispatch [:quake-load-success %])
+         :error-handler #(dispatch [:quake-load-failure %])})
+   (assoc db :loading true)))
+
+(defn raw-feature-to-earthquake [feature]
+  (let [coords (-> feature :geometry :coordinates)
+        props (-> feature :properties)]
+    {:longitude (nth coords 0)
+     :latitude (nth coords 1)
+     :depth (nth coords 2)
+     :magnitude (:mag props)
+     :quake-description (:title props)}))
+
+(defn raw-to-earthquakes [data]
+  (let [features (-> data
+        (js->clj)
+        (keywordize-keys)
+        (:features))]
+    (map raw-feature-to-earthquake features)))
+
+(reg-event-db
+ :quake-load-success
+ validate-spec
+ (fn [db [_ response]]
+   (-> db
+       (assoc :earthquakes (raw-to-earthquakes response))
+       (assoc :loading false))))
+
+(reg-event-db
+ :quake-load-failure
+ validate-spec
+ (fn [db [_ error]]
+   (assoc db :loading false)))

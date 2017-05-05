@@ -1,5 +1,6 @@
 (ns earthquakes.common.ui
-  (:require [reagent.core :as r :refer [atom]]))
+  (:require [reagent.core :as r :refer [atom]]
+            [re-frame.core :refer [subscribe dispatch]]))
 
 (def ReactNative (js/require "react-native"))
 (def MapView (js/require "react-native-maps"))
@@ -31,3 +32,30 @@
 (def material-icon (r/adapt-react-class MaterialIcon))
 
 ; Custom Components
+(defn earthquake-marker [earthquake]
+  (let [lat (:latitude earthquake)
+        lon (:longitude earthquake)
+        title (:quake-description earthquake)
+        mag (:magnitude earthquake)]
+    (fn []
+      [view
+       [map-marker {:coordinate {:latitude lat
+                                      :longitude lon}
+                         :title title}]
+            [map-circle {:center {:latitude lat
+                                  :longitude lon}
+                           :radius (* 50000 mag)
+                           :stroke-width 1
+                           :fill-color "rgba(255,0,0,0.2)"}]])))
+
+(defn earthquake-map []
+  (let [earthquakes (subscribe [:earthquakes])]
+    (fn []
+      [map-view {:style {:flex 1}
+                 :region {:latitude 35.713765
+                          :longitude 139.704039
+                          :latitude-delta 2.4
+                          :longitude-delta 2.4}}
+       (for [earthquake @earthquakes]
+         ^{:key earthquake}
+         [earthquake-marker earthquake])])))
