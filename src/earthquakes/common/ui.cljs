@@ -22,6 +22,8 @@
 (def image (r/adapt-react-class (.-Image ReactNative)))
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight ReactNative)))
 (def scroll-view (r/adapt-react-class (.-ScrollView ReactNative)))
+(def list-view (r/adapt-react-class (.-ListView ReactNative)))
+(def data-source (.-ListView.DataSource ReactNative))
 
 ; Third-party Components
 (def map-view (r/adapt-react-class MapView))
@@ -31,7 +33,22 @@
 
 (def material-icon (r/adapt-react-class MaterialIcon))
 
-; Custom Components
+(defn make-data-source [row-has-changed]
+  (new data-source (clj->js {:rowHasChanged row-has-changed})))
+
+(defn earthquake-row []
+  (let []
+    (fn []
+      [text "lol"])))
+
+(defn earthquake-list []
+  (let [earthquakes (subscribe [:earthquakes])
+        ds (make-data-source #(not= %1 %2))
+        source (.cloneWithRows ds ["Thing 1" "Thing 2"])]
+    (fn []
+      [list-view {:dataSource source
+                  :renderRow #(r/as-element earthquake-row)}])))
+
 (defn earthquake-marker [earthquake]
   (let [lat (:latitude earthquake)
         lon (:longitude earthquake)
@@ -46,7 +63,7 @@
                                   :longitude lon}
                            :radius (* 50000 mag)
                            :stroke-width 1
-                           :fill-color "rgba(255,0,0,0.2)"}]])))
+                           :fill-color "rgba(0,255,0,0.2)"}]])))
 
 (defn earthquake-map []
   (let [earthquakes (subscribe [:earthquakes])]

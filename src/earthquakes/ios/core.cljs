@@ -3,7 +3,7 @@
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [earthquakes.events]
             [earthquakes.subs]
-            [earthquakes.common.ui :as ui :refer [earthquake-map app-registry alert view text image touchable-highlight map-view map-marker map-circle tab-bar-icon]]
+            [earthquakes.common.ui :as ui :refer [earthquake-list earthquake-map app-registry alert view text image touchable-highlight map-view map-marker map-circle tab-bar-icon]]
             [earthquakes.ios.ui :as ios-ui :refer [tab-bar]]))
 
 (def logo-img (js/require "./images/cljs.png"))
@@ -20,7 +20,9 @@
                                  :on-press #(dispatch [:load-earthquakes])}
             [text {:style {:color "white" :text-align "center" :font-weight "bold"}} "press me"]]
            (if @loading?
-             [text {:style {:font-size 30 :font-weight "100" :margin-bottom 20 :text-align "center"}} "Loading"])])))
+             [text {:style {:font-size 30 :font-weight "100" :margin-bottom 20 :text-align "center"}} "Loading"])
+           ;[earthquake-list]
+           ])))
 
 (defn app-root []
   (let [greeting (subscribe [:get-greeting])

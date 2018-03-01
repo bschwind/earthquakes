@@ -2,7 +2,7 @@
   "name": "earthquakes",
   "interface": "reagent6",
   "androidHost": "localhost",
-  "iosHost": "10.0.0.8",
+  "iosHost": "10.0.1.87",
   "envRoots": {
     "dev": "env/dev",
     "prod": "env/prod"

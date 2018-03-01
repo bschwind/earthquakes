@@ -33,7 +33,7 @@
     (fn []
       [view {:style {:flex 1
                      :background-color "white"}}
-       (if (= @tab-pos 0)
+       (if (= @tab-pos 1)
          [old-app-root]
          [earthquake-map])
        [bottom-nav {:style {:height 56
